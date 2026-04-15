@@ -2,7 +2,9 @@ n = int(input())
 
 # Please write your code here.
 UNUSED = -1
-memo = [UNUSED for _ in range(n + 1)]
+MAX_N = 1001
+
+memo = [UNUSED for _ in range(MAX_N)]
 memo[0] = 1
 memo[1] = 2
 memo[2] = 7
