@@ -15,5 +15,5 @@ def dp(n):
 
     return stairs[n]
 
-print(dp(n))
+print(dp(n) % 10007)
     
