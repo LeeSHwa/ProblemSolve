@@ -21,11 +21,13 @@ def cal(row, col):
     max_2, min_2 = memo[row][col - 1]
     val = grid[row][col]
 
-
-    if max_1 - min_1 > max_2 - min_2: # 1. 2번째가 차이가 더 적다면
-        return [max(max_2, val), min(min_2, val)]
+    max_1, min_1 = max(max_1, val), min(min_1, val)
+    max_2, min_2 = max(max_2, val), min(min_2, val)
+    
+    if max_1 - min_1 > max_2 - min_2:
+        return [max_2, min_2]
     else:
-        return [max(max_1, val), min(min_1, val)]
+        return [max_1, min_1]
 
 
 for row in range(1, n):
