@@ -1,41 +1,69 @@
 n = int(input())
-grid = [list(map(int, input().split())) for _ in range(n)]
+grid = []
+nums = set()
 
-# memo : 해당 위치에서 뻗어나갈 수 있는 노드의 수
-memo = [[-1] * n for _ in range(n)]
-
-def init():
-    memo[0][0] = [grid[0][0], grid[0][0]]
-
-    # for row in range(1, n):
-    #     memo[row][0] = [max(memo[row - 1][0][0], grid[row][0]), min(memo[row - 1][0][1], grid[row][0])]
+for _ in range(n):
+    line = list(map(int, input().split()))
+    grid. append(line)
     
-    # for col in range(1, n):
-    #     memo[0][col] = [max(memo[0][col - 1][0], grid[0][col]), min(memo[0][col - 1][1], grid[0][col])]
+    for elem in line:
+        nums.add(elem)
 
-init()
+nums = sorted(list(nums))
+
+start = grid[0][0]
+
+# memo : 최소값이 L일때 가장 작은 최대값
+memo = []
 
 ans = float('inf')
 
-def backtrack(row, col):
-    global ans
+def init(lower):
+    global memo
+    memo = [[float('inf')] * n for _ in range(n)]
 
-    if row == n - 1 and col == n - 1:
-        diff = memo[-1][-1][0] - memo[-1][-1][1]
-        ans = min(ans, diff)    
-    
+    memo[0][0] = grid[0][0]
+
+    for col in range(1, n):
+        if grid[0][col] >= lower:
+            memo[0][col] = max(memo[0][col - 1], grid[0][col])
+        else:
+            break
+
+    for row in range(1, n):
+        if grid[row][0] >= lower:
+            memo[row][0] = max(memo[row - 1][0], grid[row][0])
+        else:
+            break
+
+
+
+
+
+def dp(lower, row, col):
+
     for dr, dc in [(1, 0), (0, 1)]:
         nr = row + dr
         nc = col + dc
 
-        if 0 <= nr < n and 0 <= nc < n:
-            temp = memo[nr][nc]
+        if 0 <= nr < n and 0 <= nc < n and grid[nr][nc] >= lower:
 
-            memo[nr][nc] = [max(memo[row][col][0], grid[nr][nc]), min(memo[row][col][1], grid[nr][nc])]
-            backtrack(nr, nc)
-            
-            memo[nr][nc] = temp
+            memo[nr][nc] = max(grid[nr][nc], min(memo[nr - 1][nc], memo[nr][nc - 1], memo[nr][nc]))
 
-backtrack(0, 0)
+            dp(lower, nr, nc)
+
+
+
+
+for lower in nums:
+    if lower > start:
+        break
+    init(lower)
+    
+
+    dp(lower, 0, 0)
+
+    if memo[n-1][n-1] != float('inf'):
+        ans = min(ans, memo[n-1][n-1] - lower)
 
 print(ans)
