@@ -12,8 +12,7 @@ for i in range(1, n):
         if works[i][0] > works[j][1]:
             dp[i] = max(dp[i], dp[j] + works[j][2])
 
-        else:
-            if works[j][2] > dp[i]:
-                dp[i] = works[j][2]
+        if works[i][2] > dp[i]:
+            dp[i] = works[i][2]
 
 print(max(dp))
