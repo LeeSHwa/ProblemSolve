@@ -8,12 +8,13 @@ dp[0][nums[0]] = 1
 
 for i in range(1, n):
     if nums[i] <= m:
-        dp[i][nums[i]] = nums[i]
+        dp[i][nums[i]] = 1
 
-    for j in range(nums[i], m + 1):
-        
-        dp[i][j] = min(dp[i-1][j], dp[i-1][j - nums[i]] + 1)
-
+        for j in range(1, m + 1):
+            if j - nums[i] > 0:
+                dp[i][j] = min(dp[i-1][j], dp[i-1][j - nums[i]] + 1)
+            else:
+                dp[i][j] = min(dp[i][j], dp[i-1][j])
 
 if dp[-1][-1] == float('inf'):
     print(-1)
