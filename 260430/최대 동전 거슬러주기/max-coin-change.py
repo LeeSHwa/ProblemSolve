@@ -11,4 +11,4 @@ for idx in range(1, m + 1):
         if idx >= coin:
             dp[idx] = max(dp[idx], dp[idx - coin] + 1)
 
-print(dp[-1])
+print(dp[-1] if dp[-1] != -float('inf') else -1)
