@@ -29,20 +29,15 @@ while left <= right:
     
     cnt = 1
     
-    flag = False
-    
-    for idx in range(1, n):
-        if arr[idx] <= coverage:
-            continue
-        elif arr[idx] > coverage and cnt <= k:
+    for x in arr:
+        if x > coverage:
             cnt += 1
-            coverage = arr[idx] + window
-        
-        if cnt > k:
-            flag = True
-            break
+            
+            if cnt > k:
+                break
+            coverage = x + window
     
-    if flag:
+    if cnt > k:
         left = mid + 1
     else:
         right = mid - 1
