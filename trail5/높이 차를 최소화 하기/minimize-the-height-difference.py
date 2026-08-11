@@ -25,6 +25,9 @@ def explore(L, R):
     while q:
         r, c = q.popleft()
         
+        if r == n - 1 and c == m - 1:
+            return True
+
         for dr, dc in [(1, 0), (0, 1), (-1, 0), (0, -1)]:
             nr, nc = r + dr, c + dc
             
@@ -32,7 +35,7 @@ def explore(L, R):
                 visited[nr][nc] = True
                 q.append((nr, nc))
     
-    return visited[n-1][m-1]
+    return False
             
 
 answer = None
