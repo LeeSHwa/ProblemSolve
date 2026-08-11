@@ -16,6 +16,9 @@ left = 0
 right = 499
 
 def explore(L, R):
+    if grid[n - 1][m - 1] > R or grid[n - 1][m - 1] < L:
+        return False
+
     visited = [[False] * m for _ in range(n)]
     visited[0][0] = True
     
@@ -25,9 +28,6 @@ def explore(L, R):
     while q:
         r, c = q.popleft()
         
-        if r == n - 1 and c == m - 1:
-            return True
-
         for dr, dc in [(1, 0), (0, 1), (-1, 0), (0, -1)]:
             nr, nc = r + dr, c + dc
             
@@ -35,7 +35,7 @@ def explore(L, R):
                 visited[nr][nc] = True
                 q.append((nr, nc))
     
-    return False
+    return visited[n-1][m-1]
             
 
 answer = None
@@ -44,7 +44,7 @@ while left <= right:
     mid = (left + right) // 2
     flag = False
     
-    for start in range(1, grid[0][0] + 1):
+    for start in range(max(1, grid[0][0] - mid), grid[0][0] + 1):
         if explore(start, min(start + mid, 500)):
             flag = True
             break
